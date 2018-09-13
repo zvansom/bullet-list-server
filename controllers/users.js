@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const db = require('../models');
 const router = express.Router();
@@ -89,3 +90,5 @@ router.delete('/task', function (req,res){
     }
   });
 });
+
+module.exports = router;

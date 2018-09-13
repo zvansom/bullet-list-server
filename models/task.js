@@ -9,7 +9,7 @@ var taskSchema = new mongoose.Schema({
     maxlength: 99
   },
   completed: Boolean,
-  category: Integer
+  category: Number
 });
 
 module.exports = mongoose.model('Task', taskSchema);
