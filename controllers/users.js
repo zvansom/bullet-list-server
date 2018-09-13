@@ -6,7 +6,7 @@ const db = require('../models');
 const router = express.Router();
 
 // Daily CRUD
-router.get('/daily',function(req,res){
+router.get('/daily/:id',function(req,res){
   db.Daily.find({userId: req.params.id})
     .then(dailys => {
       res.send({ dailyList: dailys});
@@ -17,7 +17,12 @@ router.get('/daily',function(req,res){
 });
 
 router.post('/daily',function(req,res){
-  db.Daily.create(req.body)
+  db.Daily.create({ 
+    userId : req.body.userId,
+    name: req.body.name, 
+    completed: JSON.parse(req.body.completed), 
+    color:req.body.color, 
+    userId: req.body.userId})
     .then(createdDaily => { res.send(createdDaily);})
     .catch(error => {
       console.log(error);
@@ -25,18 +30,20 @@ router.post('/daily',function(req,res){
     });
 });
 
-router.put('/daily', function(req, res) {
-  db.Daily.findByIdAndUpdate(req.params.id, {$set:req.body}, function(err, result){
+router.put('/daily/:id', function(req, res) {
+  console.log(req.body);
+  db.Daily.findByIdAndUpdate(req.params.id, {$set:{name:req.body.name, completed:JSON.parse(req.body.completed),color:req.body.color}}, function(err, result){
         if(err){
             console.log(err);
             res.status(400).send('unable to update');
         } else {
+          console.log(result);
           res.send(result);
         }
     });
 });
 
-router.delete('/daily', function (req,res){
+router.delete('/daily/:id', function (req,res){
   db.Daily.findByIdAndRemove(req.params.id,(error, deleted) => {
     if(error){
       console.log(error);
@@ -68,7 +75,8 @@ router.post('/task',function(req,res){
     });
 });
 
-router.put('/task', function(req, res) {
+router.put('/task/:id', function(req, res) {
+  req.body.completed = JSON.parse(req.body.completed);
   db.Task.findByIdAndUpdate(req.params.id, {$set:req.body}, function(err, result){
         if(err){
             console.log(err);
@@ -79,7 +87,7 @@ router.put('/task', function(req, res) {
     });
 });
 
-router.delete('/task', function (req,res){
+router.delete('/task/:id', function (req,res){
   db.Task.findByIdAndRemove(req.params.id,(error, deleted) => {
     if(error){
       console.log(error);

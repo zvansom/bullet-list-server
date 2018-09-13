@@ -42,13 +42,17 @@ app.use('/auth', expressJWT({
     { url: '/auth/signup', methods: ['POST'] }
   ]
 }), require('./controllers/auth'));
+/*
 app.use('/users', expressJWT({
   secret: process.env.JWT_SECRET,
   getToken: fromRequest
   }), require('./controllers/users'));
 
+*/
+app.use('/users',  require('./controllers/users'));
+
 app.get('*', function(req, res, next) {
 	res.send({ message: 'Unknown Route' });
 });
 
-app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 3000);

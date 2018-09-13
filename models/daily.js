@@ -1,5 +1,14 @@
 var mongoose = require('mongoose');
 
+var completedSchema = new mongoose.Schema({
+  sun: Boolean,
+  mon: Boolean,
+  tue: Boolean,
+  wed: Boolean,
+  thurs: Boolean,
+  fri: Boolean,
+  sat: Boolean
+});
 var dailySchema = new mongoose.Schema({
   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   name: {
@@ -8,15 +17,7 @@ var dailySchema = new mongoose.Schema({
     minlength: 1,
     maxlength: 99
   },
-  completed: {
-      sun: Boolean,
-      mon: Boolean,
-      tue: Boolean,
-      wed: Boolean,
-      thurs: Boolean,
-      fri: Boolean,
-      sat: Boolean,
-  },
+  completed: completedSchema, 
   color: String
 });
 
