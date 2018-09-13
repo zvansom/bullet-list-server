@@ -35,3 +35,12 @@ router.get('/task',function(req,res){
       res.status(400).send('Bad request for tasks');
     });
 });
+
+router.post('/task',function(req,res){
+  db.Task.create(req.body)
+    .then(createdTask => { res.send(createdTask) })
+    .catch(error => {
+      console.log(error);
+      res.status(400).send('Unable to create new task');
+    });
+});
