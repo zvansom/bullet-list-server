@@ -9,3 +9,5 @@ mongoose.set('useCreateIndex', true);
 
 // Include models from this folder
 module.exports.User = require('./user');
+module.exports.Task = require('./task');
+module.exports.Daily = require('./daily');
