@@ -18,10 +18,21 @@ router.get('/daily',function(req,res){
 
 router.post('/daily',function(req,res){
   db.Daily.create(req.body)
-    .then(createdDaily => { res.send(createdDaily) })
+    .then(createdDaily => { res.send(createdDaily);})
     .catch(error => {
       console.log(error);
       res.status(400).send('Unable to create new daily');
+    });
+});
+
+router.put('/daily', function(req, res) {
+  db.Daily.findByIdAndUpdate(req.params.id, {$set:req.body}, function(err, result){
+        if(err){
+            console.log(err);
+            res.status(400).send('unable to update');
+        } else {
+          res.send(result);
+        }
     });
 });
 
@@ -42,5 +53,16 @@ router.post('/task',function(req,res){
     .catch(error => {
       console.log(error);
       res.status(400).send('Unable to create new task');
+    });
+});
+
+router.put('/task', function(req, res) {
+  db.Task.findByIdAndUpdate(req.params.id, {$set:req.body}, function(err, result){
+        if(err){
+            console.log(err);
+            res.status(400).send('unable to update');
+        } else {
+          res.send(result);
+        }
     });
 });
