@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const jwt = require('jsonwebtoken');
 
 const db = require('../models');
 const router = express.Router();
@@ -36,6 +35,18 @@ router.put('/daily', function(req, res) {
     });
 });
 
+router.delete('/daily', function (req,res){
+  db.Daily.findByIdAndRemove(req.params.id,(error, deleted) => {
+    if(error){
+      console.log(error);
+      res.status(400).send('Unable to delete');
+    }
+    else {
+      res.send(deleted);
+    }
+  });
+});
+
 // Task CRUD
 router.get('/task',function(req,res){
   db.Task.find({userId: req.params.id})
@@ -49,7 +60,7 @@ router.get('/task',function(req,res){
 
 router.post('/task',function(req,res){
   db.Task.create(req.body)
-    .then(createdTask => { res.send(createdTask) })
+    .then(createdTask => { res.send(createdTask);})
     .catch(error => {
       console.log(error);
       res.status(400).send('Unable to create new task');
@@ -65,4 +76,16 @@ router.put('/task', function(req, res) {
           res.send(result);
         }
     });
+});
+
+router.delete('/task', function (req,res){
+  db.Task.findByIdAndRemove(req.params.id,(error, deleted) => {
+    if(error){
+      console.log(error);
+      res.status(400).send('Unable to delete');
+    }
+    else {
+      res.send(deleted);
+    }
+  });
 });
