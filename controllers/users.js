@@ -17,12 +17,14 @@ router.get('/daily/:id',function(req,res){
 });
 
 router.post('/daily',function(req,res){
+  console.log(req.body.data);
+  const parsedComplete = JSON.parse(req.body.data.completed);
   db.Daily.create({ 
-    userId : req.body.userId,
-    name: req.body.name, 
-    completed: JSON.parse(req.body.completed), 
-    color:req.body.color, 
-    userId: req.body.userId})
+    userId : req.body.data.userId,
+    name: req.body.data.name, 
+    completed: parsedComplete, 
+    color:req.body.data.color, 
+    userId: req.body.data.userId})
     .then(createdDaily => { res.send(createdDaily);})
     .catch(error => {
       console.log(error);

@@ -55,4 +55,4 @@ app.get('*', function(req, res, next) {
 	res.send({ message: 'Unknown Route' });
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8000, () => console.log('listen on 8k'));
